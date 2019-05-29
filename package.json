@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev1": "node ./spider/index.js",
+    "text": "node ./text/index.js",
+    "dev": "node ./demo/index.js"
+  },
+  "dependencies": {
+    "fs-extra": "^8.0.1",
+    "mongoose": "^5.5.11",
+    "puppeteer": "^1.17.0"
+  },
+  "devDependencies": {
+  }
+}
