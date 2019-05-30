@@ -106,18 +106,25 @@ const fs = require('fs-extra');
   // 可以使用多 worker 来跑，并且搞个任务队列处理（自动拆分任务）
   // 建立任务无需关注任务拆分
   // 使用一个工具自动拆分任务以及利用多进程去跑，如何实现
-  const tasks = alldir.slice(0, 100).map((item, index) => {
+
+  // .slice(0, 1500)
+  const tasks = alldir.slice(1020).map((item, index) => {
     return task(item, index + 1);
   });
   await Promise.all(tasks);
 
   browser.close();
 
+  // child_process.fork()
+  // http://nodejs.org/api/cluster.html
+  // https://github.com/lloyd/node-compute-cluster
+  // https://github.com/xk/node-threads-a-gogo
   // process.exit();
 })();
 
 function printResult(info) {
   const file = `${info.dist}${info.name}.md`;
+  // 异步
   fs.outputFile(file, JSON.stringify(info.content, null, 2), err => {
     if (err) {
       console.error('printResult err:', err) // => null
