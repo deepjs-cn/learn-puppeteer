@@ -62,6 +62,6 @@ typings/
 
 temp
 spider
-screenshots
+screenshots/*.png
 
 text/output/
