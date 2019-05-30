@@ -1,11 +1,11 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs-extra');
 
+
 (async function run() {
   const browser = await puppeteer.launch({
     // headless: false
   });
-
 
   async function pageInit() {
     const page = await browser.newPage();
@@ -34,6 +34,7 @@ const fs = require('fs-extra');
     return page;
   }
 
+  const page = await pageInit();
 
   // const site = {
   //   url: 'https://weekly.75team.com/',
@@ -45,12 +46,12 @@ const fs = require('fs-extra');
   // };
   const site = {
     url: 'https://www.zhetian.org/1361/',
-    selector: '.fulldir a'
+    selector: '.fulldir a',
   };
 
   // 打开链接、获取内容，下一轮
   async function goPage(info, callback) {
-    const page = await pageInit();
+    // const page = await pageInit();
     await page.goto(info.url, {
       // 等待网络状态为空闲的时候才继续执行
       waitUntil: 'networkidle2',
@@ -85,14 +86,6 @@ const fs = require('fs-extra');
   // });
 
   // '#chaptercontent'
-  // 21 => https://www.zwda.com/shengxu/7574717/
-  // https://www.zhetian.org/1361/53.html
-  // https://www.zhetian.org/novelsearch/reader/transcode/siteid/34/url/aHR0cHM6Ly93d3cuendkYS5jb20vc2hlbmd4dS83NzA3MTUxLw==
-  // https://www.zwda.com/shengxu/7707151/
-  // https://www.zhetian.org/1361/54.html
-  // https://www.zhetian.org/novelsearch/reader/transcode/siteid/34/url/aHR0cHM6Ly93d3cuendkYS5jb20vc2hlbmd4dS83NzA5MDUwLw==
-  // https://www.zwda.com/shengxu/7709050/
-
   async function task(info, index) {
     info.selector = '#chaptercontent';
     const result = await goPage(info, info => {
@@ -109,12 +102,18 @@ const fs = require('fs-extra');
     });
   }
 
+  // 任务不能一下子全跑，太多会直接搞崩溃
+  // 可以使用多 worker 来跑，并且搞个任务队列处理（自动拆分任务）
+  // 建立任务无需关注任务拆分
+  // 使用一个工具自动拆分任务以及利用多进程去跑，如何实现
   const tasks = alldir.slice(0, 100).map((item, index) => {
     return task(item, index + 1);
   });
   await Promise.all(tasks);
 
   browser.close();
+
+  // process.exit();
 })();
 
 function printResult(info) {
