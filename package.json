@@ -2,6 +2,7 @@
   "scripts": {
     "dev1": "node ./spider/index.js",
     "text": "node ./text/index.js",
+    "cpu": "babel-node ./cpu/index.js",
     "dev": "node ./demo/index.js"
   },
   "dependencies": {

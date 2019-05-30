@@ -13,6 +13,7 @@ function iter(n) {
     const swap = current
     current = next
     next = swap + next
+    // console.log(next);
   }
   return current
 }
