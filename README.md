@@ -13,6 +13,9 @@
   - https://github.com/jhurliman/node-rate-limiter
   - https://github.com/rvagg/node-worker-farm
   - https://github.com/bevry/taskgroup
+- 破解滑动验证
+  - https://mp.weixin.qq.com/s/NDIEaAhMHdrC3l9DV8z00g
+  - https://blog.csdn.net/lmw1239225096/article/details/79099238
 
 ```js
 const authURL = url.format({
